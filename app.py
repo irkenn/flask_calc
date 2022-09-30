@@ -13,7 +13,7 @@ def add():
     return output
 
 @app.route('/sub')
-def add():
+def sub():
     """Adds a and b"""
     a = request.args.get("a", type=int)
     b = request.args.get("b", type=int)
@@ -22,7 +22,7 @@ def add():
     return output
 
 @app.route('/mult')
-def add():
+def mult():
     """Adds a and b"""
     a = request.args.get("a", type=int)
     b = request.args.get("b", type=int)
@@ -31,10 +31,27 @@ def add():
     return output
 
 @app.route('/div')
-def add():
+def div():
     """Adds a and b"""
     a = request.args.get("a", type=int)
     b = request.args.get("b", type=int)
     output = a/b
     output = str(output)
     return output
+
+operators = {
+        "add": add,
+        "sub": sub,
+        "mult": mult,
+        "div": div,
+        }
+
+@app.route("/math/<oper>")
+def do_math(oper):
+    """Do math on a and b."""
+
+    a = int(request.args.get("a"))
+    b = int(request.args.get("b"))
+    result = operators[oper](a, b)
+
+    return str(result) 
